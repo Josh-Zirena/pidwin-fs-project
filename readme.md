@@ -1,6 +1,6 @@
-# Pidwin Assessment
+# Pidwin Project
 
-The Pidwin Fullstack Assessment with changes by Josh Zirena.
+The Pidwin Fullstack Project with changes by Josh Zirena.
 
 ## Project setup
 
