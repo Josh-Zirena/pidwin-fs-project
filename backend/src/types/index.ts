@@ -1,5 +1,5 @@
-import { Request } from 'express';
-import { JwtPayload } from 'jsonwebtoken';
+import { Request } from "express";
+import { JwtPayload } from "jsonwebtoken";
 
 export interface UserDocument {
   _id: string;
@@ -7,6 +7,8 @@ export interface UserDocument {
   email: string;
   password: string;
   id?: string;
+  balance: number;
+  winStreak: number;
 }
 
 export interface LoginRequest {

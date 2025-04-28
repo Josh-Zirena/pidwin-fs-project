@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../models/user.js";
-import { LoginRequest } from "../types/index.js";
+import User from "../../models/user.js";
+import { LoginRequest } from "../../types/index.js";
 
 const login = async (req: Request, res: Response) => {
   const { email, password }: LoginRequest = req.body;
@@ -29,6 +29,8 @@ const login = async (req: Request, res: Response) => {
         name: existingUser.name,
         email: existingUser.email,
         password: existingUser.password,
+        balance: existingUser.balance,
+        winStreak: existingUser.winStreak,
       },
       "test",
       { expiresIn: "1h" }

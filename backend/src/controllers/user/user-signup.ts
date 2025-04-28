@@ -1,11 +1,17 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../models/user.js";
-import { SignupRequest } from "../types/index.js";
+import User from "../../models/user.js";
+import { SignupRequest } from "../../types/index.js";
 
 const signup = async (req: Request, res: Response) => {
-  const { email, password, confirmPassword, firstName, lastName }: SignupRequest = req.body;
+  const {
+    email,
+    password,
+    confirmPassword,
+    firstName,
+    lastName,
+  }: SignupRequest = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
@@ -22,14 +28,18 @@ const signup = async (req: Request, res: Response) => {
       email,
       password: hashedPassword,
       name: `${firstName} ${lastName}`,
+      balance: 100,
+      winStreak: 0,
     });
-    
+
     const token = jwt.sign(
       {
         _id: result._id,
         name: result.name,
         email: result.email,
         password: result.password,
+        balance: result.balance,
+        winStreak: result.winStreak,
       },
       "test",
       { expiresIn: "1h" }

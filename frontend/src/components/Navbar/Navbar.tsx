@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { AppBar, Typography, Toolbar, Avatar, Button } from "@mui/material";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import * as actionType from "../../constants/actionTypes";
@@ -8,46 +8,23 @@ import { styles } from "./styles";
 import { UserData } from "../../types/actionTypes";
 import { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
+import { useUser } from "../../contexts/UserContext";
 
 const Navbar: React.FC = () => {
-  const [user, setUser] = useState<UserData | "null">(
-    localStorage.getItem("profile")
-      ? jwtDecode<UserData>(JSON.parse(localStorage.getItem("profile") || "{}").token)
-      : "null"
-  );
-  
+  const { profile, setProfile } = useUser();
   const dispatch = useDispatch<ThunkDispatch<any, any, AnyAction>>();
-  const location = useLocation();
   const history = useNavigate();
 
+  const userData: UserData | null = profile
+    ? jwtDecode<UserData>(profile.token)
+    : null;
+
   const logout = () => {
+    localStorage.removeItem("profile");
+    setProfile(null);
     dispatch({ type: actionType.LOGOUT });
     history("/auth");
-    setUser("null");
   };
-
-  useEffect(() => {
-    if (user !== "null" && user !== null) {
-      if (user.exp && user.exp * 1000 < new Date().getTime()) logout();
-    }
-    
-    try {
-      const profileStr = localStorage.getItem("profile");
-      if (profileStr) {
-        const profile = JSON.parse(profileStr);
-        if (profile?.token) {
-          setUser(jwtDecode<UserData>(profile.token));
-        } else {
-          setUser("null");
-        }
-      } else {
-        setUser("null");
-      }
-    } catch (error) {
-      console.error("Error parsing profile from localStorage:", error);
-      setUser("null");
-    }
-  }, [location]);
 
   return (
     <AppBar sx={styles.appBar} position="static" color="inherit">
@@ -63,13 +40,21 @@ const Navbar: React.FC = () => {
         </Typography>
       </div>
       <Toolbar sx={styles.toolbar}>
-        {user !== "null" && user !== null ? (
+        {profile && userData ? (
           <div style={styles.profile}>
-            <Avatar sx={styles.purple} alt={user.name} src={user.picture}>
-              {user.name.charAt(0)}
+            <Avatar
+              sx={styles.purple}
+              alt={userData.name}
+              src={userData.picture}
+            >
+              {userData.name.charAt(0)}
             </Avatar>
             <Typography sx={styles.userName} variant="h6">
-              {user.name}
+              {userData.name}
+            </Typography>
+            <Typography sx={styles.userName} variant="h6">
+              Balance:
+              {profile.balance == null ? userData.balance : profile.balance}$
             </Typography>
             <Button
               variant="contained"

@@ -1,5 +1,9 @@
 import axios from "axios";
-import { LoginFormData, SignupFormData, PasswordChangeFormData } from "../types/actionTypes";
+import {
+  LoginFormData,
+  SignupFormData,
+  PasswordChangeFormData,
+} from "../types/actionTypes";
 
 const API = axios.create({ baseURL: "http://localhost:5000" });
 
@@ -12,7 +16,11 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-export const login = (formData: LoginFormData) => API.post("/api/user/login", formData);
-export const signUp = (formData: SignupFormData) => API.post("/api/user/signup", formData);
+export const login = (formData: LoginFormData) => {
+  return API.post("/api/user/login", formData);
+};
+export const signUp = (formData: SignupFormData) => {
+  return API.post("/api/user/signup", formData);
+};
 export const changePassword = (formData: PasswordChangeFormData) =>
   API.post("/api/user/changePassword", formData);

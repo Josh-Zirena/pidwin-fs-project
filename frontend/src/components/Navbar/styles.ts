@@ -11,6 +11,8 @@ interface StylesInterface {
   brandContainer: React.CSSProperties;
   purple: SxProps<Theme>;
   logout?: SxProps<Theme>;
+  balance: SxProps<Theme>;
+  // submit: SxProps<Theme>;
 }
 
 export const styles: StylesInterface = {
@@ -37,6 +39,9 @@ export const styles: StylesInterface = {
     justifyContent: "space-between",
     width: "600px",
   },
+  balance: {
+    display: "flex",
+  },
   userName: {
     display: "flex",
     alignItems: "center",
@@ -49,4 +54,8 @@ export const styles: StylesInterface = {
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
   },
+  // submit: {
+  //   color: theme.palette.getContrastText(deepPurple[500]),
+  //   backgroundColor: deepPurple[500],
+  // },
 };
