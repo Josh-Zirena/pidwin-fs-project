@@ -1,6 +1,6 @@
 # Pidwin Assessment
 
-The Pidwin Fullstack Assessment.
+The Pidwin Fullstack Assessment with changes by Josh Zirena.
 
 ## Project setup
 
@@ -14,19 +14,19 @@ and run the following command
 ```bash
 npm install
 ```
----
 
+---
 
 ## Backend
 
 Create a **.env file** and populate the fields.
 
-
 Now in the backend folder. Run the start
-   command
-   ```bash
-   npm run start
-   ```
+command
+
+```bash
+npm run dev
+```
 
 The backend is now up and running.
 
@@ -34,4 +34,10 @@ The backend is now up and running.
 
 ## Frontend
 
-The frontend is your standard create-react-app, the default ReadME is provided under frontend/readme.md for reference.
+The frontend is now powered by Vite.js. Not much changes, you can run it using the following command.
+
+command
+
+```
+npm run dev
+```
